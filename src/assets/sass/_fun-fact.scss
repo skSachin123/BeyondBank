@@ -1,0 +1,72 @@
+.funfact-one {
+    position: relative;
+    padding: 121px 0;
+    background-color: $thm-base;
+    @media(max-width: 991px) {
+        padding-bottom: 90px;
+    }
+    &__bg {
+        position: absolute;
+        background-color: $thm-base;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.1;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-blend-mode: hard-light;
+        background-position: center center;
+    }
+    .container{
+        position: relative;
+        [class*=col-]:not(:first-of-type) {
+            position: relative;
+            &::before {
+                content: '';
+                width: 3px;
+                height: 43px;
+                background-color: #fff;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                border-radius: $border-radius;
+            @media(max-width: 991px) {
+                display: none;
+            }
+            }
+        }
+        [class*=col-]:nth-child(3n) {
+            @media(max-width: 991px) {
+                &::before {
+                    display: none;
+                }
+            }
+        }
+    }
+    &__box {
+        text-align: center;
+        position: relative;
+        @media(max-width: 991px) {
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 50px;
+            font-weight: 300;
+            line-height: 1;
+            color: #fff;
+            margin: 0;
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+        }
+        p {
+            margin: 0;
+            line-height: 1;
+            color: #fff;
+        }
+    }
+}

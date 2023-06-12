@@ -1,0 +1,128 @@
+.contact-one {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  .block-title {
+    margin-bottom: 75px;
+    @media (max-width: 480px) {
+      margin-bottom: 40px;
+    }
+  }
+  &__content {
+    @media (max-width: 991px) {
+      margin-bottom: 60px;
+    }
+    > p {
+      margin: 0;
+      margin-bottom: 45px;
+    }
+  }
+  &__box + &__box {
+    border-top: 1px solid #e6eaef;
+    margin-top: 30px;
+    padding-top: 30px;
+  }
+  &__box {
+    display: flex;
+    align-items: center;
+    @media (min-width: 1200px) {
+      margin-right: 30px;
+    }
+    &:hover {
+      > i {
+        background-color: $thm-primary;
+      }
+    }
+    > i {
+      width: 65px;
+      height: 65px;
+      background-color: $thm-base;
+      color: #fff;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: all 500ms ease;
+      border-radius: 50%;
+    }
+    &-content {
+      margin-left: 20px;
+      h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 400;
+        color: $thm-black;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      a {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1;
+        display: block;
+        color: $thm-color;
+        transition: all 500ms ease;
+        &:hover {
+          color: $thm-primary;
+        }
+      }
+    }
+  }
+  &__form {
+    .low-gutters {
+      margin-left: -10px;
+      margin-right: -10px;
+      > [class*="col-"] {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      display: block;
+      border: none;
+      outline: none;
+      background-color: #eff2f6;
+      color: $thm-color;
+      margin-bottom: 20px;
+      height: 67px;
+      padding-left: 30px;
+      padding-right: 30px;
+      border-radius: $border-radius;
+      font-size: 15px;
+    }
+    textarea {
+      height: 225px;
+      padding-top: 20px;
+    }
+    .thm-btn {
+      &:hover {
+        background-color: $thm-black;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.contact-two {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  .about-one__form {
+    margin-top: 0;
+    @media (max-width: 991px) {
+      margin-top: 60px;
+    }
+  }
+
+  .contact-one__form {
+    > p {
+      margin: 0;
+      margin-top: -10px;
+      margin-bottom: 35px;
+    }
+    textarea {
+      height: 185px;
+    }
+  }
+}

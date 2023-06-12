@@ -1,0 +1,204 @@
+.main-slider {
+  overflow: hidden;
+  position: relative;
+  .swiper-slide {
+    position: relative;
+    background-color: $thm-black;
+    .image-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-repeat: no-repeat;
+      background-size: cover;
+      transform: scale(1);
+      background-position: center;
+      transition: transform 7000ms ease;
+    }
+    .container {
+      padding-top: 150px;
+      padding-bottom: 274px;
+      @media(max-width: 991px) {
+        padding-top: 130px;
+        padding-bottom: 130px;
+      }
+      @media(max-width: 425px) {
+        padding-top: 110px;
+        padding-bottom: 110px;
+      }
+    }
+
+    p {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+      opacity: 0;
+      transform: translateY(-120px);
+      transition-delay: 0;
+      transition: transform 2000ms ease, opacity 2000ms ease;
+      @media(max-width: 375px) {
+        font-size: 18px;
+      }
+    }
+    h2 {
+      margin: 0;
+      color: #fff;
+      font-size: 90px;
+      margin-top: 15px;
+      margin-bottom: 40px;
+      line-height: 1;
+      font-weight: 400;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(90px);
+      transition-delay: 1000ms;
+      transition: transform 2000ms ease, opacity 2000ms ease;
+      @media(max-width: 1199px) {
+        font-size: 70px;
+      }
+      @media(max-width: 767px) {
+        font-size: 60px;
+      }
+      @media(max-width: 425px) {
+        font-size: 50px;
+      }
+      @media(max-width: 375px) {
+        font-size: 40px;
+        line-height: 1.3;
+      }
+    }
+    .thm-btn {
+      opacity: 0;
+      transform: translateY(100px);
+      transition-delay: 2500ms;
+      transition: transform 2000ms ease, opacity 2000ms ease, color 500ms ease,
+        background 500ms ease;
+    }
+    &-active {
+      .image-layer {
+        transform: scale(1.15);
+      }
+      .thm-btn,
+      h2,
+      p {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0) translateX(0);
+      }
+    }
+  }
+}
+
+.main-slider__nav {
+  width: 100%;
+  max-width: 1200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  transform: translateY(-50%) translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  @media(max-width: 425px) {
+    display: none;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    z-index: 100;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    opacity: 0.3;
+    margin: 0;
+    transition: all 500ms ease;
+    @media(max-width: 991px) {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+    }
+    &:hover {
+      opacity: 1;
+    }
+    &::after {
+      display: none;
+    }
+  }
+  .swiper-button-prev {
+    margin-bottom: 20px;
+    @media(max-width: 991px) {
+      margin-top: 10px;
+    }
+  }
+}
+
+.main-slider__two {
+  .swiper-slide {
+    .container {
+      padding-top: 243px;
+      padding-bottom: 303px;
+      @media(max-width: 991px) {
+        padding-top: 140px;
+        padding-bottom: 170px;
+      }
+    }
+    h2 {
+      font-size: 80px;
+      max-width: 705px;
+      @media(max-width: 991px) {
+        font-size: 70px;
+      }
+      @media(max-width: 767px) {
+        font-size: 55px;
+      }
+      @media(max-width: 480px) {
+        font-size: 45px;
+      }
+      @media(max-width: 375px) {
+        font-size: 38px;
+        line-height: 1.3;
+      }
+    }
+    p {
+      color: #fff;
+      border-bottom: 3px solid $thm-base;
+      display: inline-flex;
+      line-height: 1;
+      padding-bottom: 5px;
+    }
+    .button-wrap {
+      display: flex;
+
+      @media(max-width: 375px) {
+        flex-wrap: wrap;
+      }
+      .thm-btn:nth-of-type(2) {
+        background-color: $thm-primary;
+        margin-left: 10px;
+      @media(max-width: 375px) {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+        &:hover {
+          background-color: #fff;
+          color: $thm-black;
+        }
+      }
+    }
+  }
+}

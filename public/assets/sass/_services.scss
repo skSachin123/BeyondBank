@@ -1,0 +1,473 @@
+.service-one {
+  padding-top: 120px;
+  margin-bottom: -236px;
+  position: relative;
+  z-index: 10;
+  @media(max-width: 991px) {
+    margin-bottom: 0;
+    padding-bottom: 60px;
+  }
+  @media(max-width: 425px) {
+    padding-top: 80px;
+  }
+  &__card {
+    border-radius: $border-radius;
+    @media(max-width: 991px) {
+      margin-bottom: 60px;
+    }
+  }
+  &__image {
+    overflow: hidden;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    background-color: $thm-black;
+    > img {
+      width: 100%;
+      transition: transform 500ms ease, opacity 500ms ease;
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  &__card:hover &__image > img {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  &__content {
+    background-color: #fff;
+    padding: 40px;
+    padding-top: 35px;
+    padding-bottom: 50px;
+    box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    h3 {
+      color: $thm-black;
+      font-size: 24px;
+      margin: 0;
+      margin-bottom: 15px;
+      font-weight: 500;
+      a {
+        color: inherit;
+        transition: all 500ms ease;
+      }
+    }
+    p {
+      margin: 0;
+      color: $thm-color;
+    }
+  }
+  &__link {
+    position: absolute;
+    right: 40px;
+    bottom: 0;
+    background-color: #fff;
+    box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    transform: translateY(50%);
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: $thm-color;
+    transition: all 500ms ease;
+  }
+
+  &__card:hover &__link {
+    background-color: $thm-primary;
+    color: #fff;
+  }
+
+  &__home-two {
+    position: relative;
+    margin-bottom: 0;
+    padding-bottom: 120px;
+    &__shape-1 {
+      position: absolute;
+      z-index: 10;
+      top: 70px;
+      left: 245px;
+      -webkit-animation-name: bubbleMover;
+      animation-name: bubbleMover;
+      -webkit-animation-timing-function: linear;
+      animation-timing-function: linear;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      animation-duration: 8s;
+    }
+    &__shape-2 {
+      position: absolute;
+      z-index: 10;
+      top: 100px;
+      right: 366px;
+      -webkit-animation-name: bubbleMover;
+      animation-name: bubbleMover;
+      -webkit-animation-timing-function: linear;
+      animation-timing-function: linear;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      animation-duration: 8s;
+    }
+    &__shape-3 {
+      position: absolute;
+      z-index: 10;
+      right: 146px;
+      top: 450px;
+      -webkit-transform-origin: center bottom;
+      transform-origin: center bottom;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      -webkit-animation-name: bounce;
+      animation-name: bounce;
+      -webkit-animation-timing-function: ease-out;
+      animation-timing-function: ease-out;
+      -webkit-animation-duration: 5s;
+      animation-duration: 5s;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 515px;
+      background-color: #eff2f6;
+    }
+    .container {
+      position: relative;
+    }
+  }
+}
+
+.service-two {
+  background-color: #eff2f6;
+  padding-bottom: 90px;
+  position: relative;
+  &__shape-1 {
+    position: absolute;
+    top: 95px;
+    left: 250px;
+    -webkit-animation-name: shapeMover;
+    animation-name: shapeMover;
+    -webkit-animation-duration: 9s;
+    animation-duration: 9s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+  }
+  &__shape-3 {
+    position: absolute;
+    bottom: 65px;
+    left: 200px;
+    -webkit-animation-name: bubbleMover;
+    animation-name: bubbleMover;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-duration: 8s;
+  }
+  &__shape-2 {
+    position: absolute;
+    top: 158px;
+    right: 196px;
+    -webkit-animation-name: shapeMover;
+    animation-name: shapeMover;
+    -webkit-animation-duration: 9s;
+    animation-duration: 9s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+  }
+  .container {
+    position: relative;
+    margin-top: -30px;
+    z-index: 100;
+  }
+
+  .service-two__card {
+    margin-bottom: 30px;
+    border-radius: $border-radius;
+    background-color: #fff;
+    padding: 60px;
+    padding-bottom: 42px;
+    position: relative;
+    transition: all 500ms ease;
+    @media (max-width: 1199px) {
+      padding: 40px;
+    }
+    &::before {
+      content: "";
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      width: 100%;
+      height: calc(100% - 4px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #fff;
+    }
+    > i {
+      position: relative;
+      font-size: 60px;
+      color: $thm-base;
+      position: relative;
+      &::before {
+        position: relative;
+        z-index: 10;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-color: #eff2f6;
+        top: 0;
+        left: 0;
+        border-radius: 50%;
+      }
+    }
+    h3 {
+      margin-top: 10px;
+      margin-bottom: 25px;
+      position: relative;
+      color: $thm-black;
+      font-size: 24px;
+      line-height: 36px;
+      font-weight: 400;
+      max-width: 180px;
+      a {
+        color: inherit;
+        transition: all 500ms ease;
+        &:hover {
+          color: $thm-base;
+        }
+      }
+    }
+    p {
+      position: relative;
+      margin: 0;
+      font-size: 18px;
+      line-height: 34px;
+      margin-bottom: 20px;
+    }
+    &-link {
+      position: relative;
+      color: $thm-color;
+      transition: all 500ms ease;
+      font-size: 16px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      transition: all 500ms ease;
+      > i {
+        font-size: 32px;
+        margin-right: 10px;
+      }
+      &:hover {
+        color: $thm-primary;
+      }
+    }
+    &:hover {
+      background-color: $thm-primary;
+    }
+  }
+}
+
+.service-sidebar {
+  &__category {
+    padding: 50px 20px;
+    padding-bottom: 38px;
+    background-color: #eff2f6;
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      color: $thm-black;
+      line-height: 1;
+      font-weight: 400;
+      padding-left: 30px;
+      margin-bottom: 25px;
+      @media (max-width: 1199px) {
+        padding-left: 15px;
+      }
+    }
+    &-list {
+      margin-bottom: 0;
+      li {
+        line-height: 1;
+        a {
+          display: block;
+          padding: 12px 30px;
+          color: $thm-color;
+          font-size: 16px;
+          line-height: 1;
+          border-radius: $border-radius;
+          transition: all 500ms ease;
+          @media (max-width: 1199px) {
+            padding-left: 15px;
+            padding-right: 15px;
+          }
+        }
+        &:hover {
+          a {
+            color: $thm-black;
+            text-shadow: 0px 0 0 currentColor;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+  &__call {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    position: relative;
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom: 55px;
+    background-color: $thm-primary;
+    &-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-repeat: no-repeat;
+      background-color: $thm-primary;
+      background-blend-mode: hard-light;
+      background-size: cover;
+      background-position: center center;
+      opacity: 0.1;
+    }
+    i {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $thm-base;
+      font-size: 32px;
+      width: 67px;
+      height: 67px;
+      background-color: #fff;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 50%;
+      margin-bottom: 35px;
+    }
+    h3 {
+      color: #fff;
+      font-size: 26px;
+      line-height: 1;
+      margin: 0;
+      max-width: 250px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 35px;
+      a {
+        color: inherit;
+        transition: all 500ms ease;
+        &:hover {
+          color: $thm-black;
+        }
+      }
+    }
+    p {
+      margin: 0;
+      color: #fff;
+      max-width: 250px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+.service-details {
+  background-color: #fff;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  &__image {
+    > img {
+      border-radius: $border-radius;
+    }
+  }
+  &__content {
+    p {
+      margin: 0;
+      color: $thm-color;
+      + p {
+        margin-top: 30px;
+      }
+    }
+    > .row {
+      margin-top: 60px;
+      margin-bottom: 60px;
+    }
+    &-image {
+      border-radius: $border-radius;
+      @media (max-width: 1199px) {
+        margin-bottom: 30px;
+      }
+    }
+    > h3 {
+      margin: 0;
+      font-weight: 400;
+      color: $thm-black;
+      font-size: 40px;
+      margin-top: 50px;
+      margin-bottom: 25px;
+    }
+    h4 {
+      color: $thm-black;
+      font-size: 26px;
+      margin: 0;
+      font-weight: 400;
+      margin-bottom: 35px;
+    }
+  }
+
+  .about-two__list {
+    margin-top: 30px;
+    margin-bottom: 0;
+    li {
+      flex: 0 0 100%;
+      color: $thm-color;
+      font-weight: 400;
+      + li {
+        margin-top: 3px;
+      }
+    }
+  }
+
+  #accordion li {
+    background-color: #eff2f6;
+    border-radius: $border-radius;
+    transition: all 500ms ease;
+    &.active {
+      background-color: #fff;
+      box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
+    }
+    .para-title {
+      background-color: #eff2f6;
+      &.active {
+        background-color: #fff;
+      }
+    }
+    .collapse {
+      background-color: #eff2f6;
+    }
+  }
+}
+
+
+.service-page {
+  .service-one__card {
+    margin-bottom: 0;
+  }
+}

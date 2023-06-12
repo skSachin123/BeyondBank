@@ -1,0 +1,32 @@
+.how-works {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    &__image {
+        border-radius: $border-radius;
+        @media(max-width: 767px) {
+            max-width: 100%;
+        }
+    }
+    &__content {
+        position: relative;
+        margin-top: 60px;
+        border-radius: $border-radius;
+        padding: 100px;
+        padding-bottom: 95px;
+        background-color: #fff;
+        box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.07);
+        @media(max-width: 1199px) {
+            padding: 50px;
+        }
+        @media(max-width: 480px) {
+            padding: 40px 30px;
+        }
+    }
+    .block-title h2 {
+        letter-spacing: -.01em;
+        line-height: 1.08;
+    }
+    .block-text {
+        margin-top: -10px;
+    }
+}

@@ -1,0 +1,105 @@
+.blog-card {
+  margin-bottom: 30px;
+  &__image {
+    position: relative;
+    overflow: hidden;
+    background-color: $thm-black;
+    border-radius: $border-radius;
+    img {
+      width: 100%;
+      border-radius: $border-radius;
+      transform: scale(1);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+    > span {
+      width: 59px;
+      height: 59px;
+      background-color: $thm-primary;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      border-radius: 50%;
+      padding-left: 10px;
+      padding-right: 10px;
+      z-index: 10;
+    }
+  }
+  &:hover &__image > img {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+  &__content {
+    width: calc(100% - 30px);
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    position: relative;
+    margin-top: -30px;
+    border-radius: $border-radius;
+    h3 {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 36px;
+      color: $thm-black;
+      margin-bottom: 0;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      @media(max-width: 1199px) {
+        font-size: 20px;
+        line-height: 1.4;
+      }
+      a {
+        color: inherit;
+        transition: all 500ms ease;
+        &:hover {
+          color: $thm-base;
+        }
+      }
+    }
+  }
+  &__meta {
+    display: flex;
+    align-items: center;
+    a {
+      display: flex;
+      align-items: center;
+      color: $thm-color;
+      transition: all 500ms ease;
+      font-size: 14px;
+      line-height: 1;
+      + a {
+        margin-left: 7px;
+      }
+      > i {
+        color: $thm-base;
+        transition: all 500ms ease;
+        margin-right: 5px;
+      }
+      &:hover {
+        color: $thm-base;
+        > i {
+          color: $thm-black;
+        }
+      }
+    }
+  }
+  &__author {
+    font-size: 14px;
+    font-weight: 500;
+    color: #798490;
+    img {
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  }
+}

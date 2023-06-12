@@ -1,0 +1,294 @@
+.team-home {
+  background-color: #eff2f6;
+  padding: 120px 0;
+  position: relative;
+  &__bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 733px;
+    height: calc(100% + 60px);
+    background-color: $thm-primary;
+    background-blend-mode: hard-light;
+    overflow: hidden;
+    border-bottom-left-radius: $border-radius;
+    @media(max-width: 1199px) {
+      width: 630px;
+    }
+    @media(max-width: 991px) {
+      display: none;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: $thm-primary;
+      opacity: 0.9;
+    }
+  }
+  &__shape-1 {
+    position: absolute;
+    top: 133px;
+    left: 225px;
+    -webkit-animation-name: bubbleMover;
+    animation-name: bubbleMover;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-duration: 8s;
+  }
+  &__shape-2 {
+    position: absolute;
+    bottom: 0;
+    left: 104px;
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+  }
+  &__content {
+    > P {
+      margin-bottom: 0;
+      margin-top: -10px;
+      padding-right: 45px;
+      @media(max-width: 1199px) {
+        max-width: 450px;
+      }
+    }
+  }
+
+  &__carousel-wrap {
+    width: 100%;
+    max-width: 1170px;
+    position: absolute;
+    top: 120px;
+    right: -185px;
+    @media(max-width: 1650px) {
+      right: -240px;
+    }
+    @media(max-width: 1550px) {
+      right: -300px;
+    }
+    @media(max-width: 1400px) {
+      right: -350px;
+    }
+
+    @media(max-width: 1280px) {
+      position: relative;
+      top: auto;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 40px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}
+
+.team-home__nav {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  .swiper-button-next,
+  .swiper-button-prev {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    z-index: 100;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: $thm-color;
+    border: 2px solid $thm-color;
+    border-radius: 50%;
+    opacity: .4;
+    margin: 0;
+    transition: all 500ms ease;
+    &:hover {
+      opacity: 1;
+      border-color: $thm-base;
+      color: $thm-base;
+    }
+    &::after {
+      display: none;
+    }
+  }
+  .swiper-button-prev {
+    margin-right: 20px;
+  }
+}
+
+.team-one {
+  &__card {
+    position: relative;
+    border-radius: $border-radius;
+  }
+
+  &__image {
+    border-radius: $border-radius;
+    overflow: hidden;
+    > img {
+      width: 100%;
+      border-radius: $border-radius;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+  }
+  &__card:hover &__image > img {
+    transform: scale(1.05);
+  }
+  &__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 300px;
+    border-top-right-radius: $border-radius;
+    background-color: $thm-base;
+    padding: 40px 50px;
+    h3 {
+      margin: 0;
+      font-size: 22px;
+      color: #fff;
+      font-weight: 400;
+      line-height: 1;
+    }
+    span {
+      display: block;
+      margin: 0;
+      line-height: 1;
+      color: #fff;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  }
+
+  &__social {
+    background-color: #fff;
+    width: 100%;
+    position: absolute;
+    border-top-right-radius: $border-radius;
+    bottom: 100%;
+    left: 0;
+    max-width: 240px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1, 0);
+    opacity: 0;
+    transition: transform 500ms ease, opacity 500ms ease;
+    transform-origin: bottom left;
+    a {
+      display: flex;
+      line-height: 49px;
+      color: $thm-black;
+      font-size: 16px;
+      transition: all 500ms ease;
+      &:hover {
+        color: $thm-primary;
+      }
+      + a {
+        margin-left: 30px;
+      }
+    }
+  }
+  &__card:hover &__social {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+.team-details {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  &__content {
+    @media (min-width: 1200px) {
+      margin-left: 70px;
+    }
+    @media (max-width: 991px) {
+      margin-top: 40px;
+    }
+    h2 {
+      margin: 0;
+      color: $thm-black;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 15px;
+    }
+    > span {
+      font-size: 18px;
+      color: $thm-base;
+      display: block;
+      line-height: 1;
+    }
+    > p {
+      margin: 0;
+      margin-top: 45px;
+      margin-bottom: 40px;
+    }
+  }
+  &__certificates {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    @media(max-width: 1199px) {
+      margin-left: -20px;
+    }
+    > img {
+      @media(max-width: 1199px) {
+        margin-left: 20px;
+        width: 44%;
+      }
+    }
+  }
+  &__social {
+    display: flex;
+    flex-wrap: wrap;
+    a {
+      display: flex;
+      justify-content: center;
+      border-radius: 50%;
+      align-items: center;
+      width: 41px;
+      height: 41px;
+      background-color: #eff2f6;
+      color: #0c2139;
+      font-size: 12px;
+      transition: all 500ms ease;
+      &:hover {
+        background-color: $thm-base;
+        color: #fff;
+      }
+      + a {
+        margin-left: 10px;
+      }
+    }
+  }
+  .why-choose__progress-bar {
+      background-color: #eff2f6;
+  }
+}

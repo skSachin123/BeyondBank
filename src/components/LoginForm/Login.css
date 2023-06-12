@@ -1,0 +1,160 @@
+.login-box {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  width: 420px;
+  margin: 5% auto;
+  /* margin-top: 1%; */
+  /* padding: 28px; */
+  height: 400px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+select#gender option[value="facial"] {
+  background-image: url("../../assets/images/voice.png");
+}
+/* select#gender option[value="female"] {
+  background-image: url(female.png);
+} */
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: normal;
+  color: black;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  display: block;
+  flex-direction: column;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+}
+input::placeholder {
+  color: lightgray;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border: 2px solid #87898d;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  width: 20px;
+  height: 17px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  background-color: #007bff;
+  border: none;
+}
+
+.checkbox:focus {
+  outline: none;
+  border: 2px solid #007bff;
+}
+
+.btn-blue {
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.btn-blue:hover {
+  background-color: #0069d9;
+}
+
+.recover-password {
+  margin-top: 13px;
+  font-size: 1rem;
+  color: gray;
+  position: relative;
+  left: 80px;
+  text-decoration: underline;
+}
+
+.checkbox-label {
+  font-size: 1rem;
+  color: black;
+  font-weight: normal;
+}
+
+/* @media (max-width: 768px) {
+  .login-box {
+    max-width: 100%;
+    margin: 10px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recover-password {
+    font-size: 12px;
+  }
+} */
+.item {
+  background: 0 0;
+  border: 1px solid transparent;
+  width: 50%;
+  border-top: 2px solid transparent;
+  border-bottom: none;
+
+  padding: 0.52857143em 1em;
+  color: rgba(0, 0, 0, 0.87);
+}
+@media (max-width: 768px) {
+  .login-box {
+    width: 90%;
+    height: auto;
+    padding: 20px;
+    margin: 10% auto;
+  }
+
+  label {
+    font-size: 1rem;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    font-size: 1rem;
+  }
+
+  .btn-blue {
+    font-size: 1rem;
+  }
+
+  .recover-password {
+    left: auto;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .checkbox-label {
+    font-size: 0.9rem;
+  }
+}

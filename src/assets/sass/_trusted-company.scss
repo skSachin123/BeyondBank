@@ -1,0 +1,122 @@
+.trusted-company {
+  background-color: #0c2139;
+  position: relative;
+  padding: 120px 0;
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.02;
+    background-size: cover;
+  }
+
+  .block-title {
+    max-width: 520px;
+    @media (max-width: 991px) {
+      max-width: 450px;
+      text-align: center !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    p {
+      color: $thm-text-dark;
+    }
+    h2 {
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+  }
+  &__image {
+    display: flex;
+    align-items: center;
+    @media (max-width: 1199px) {
+      flex-wrap: wrap;
+    }
+    @media (max-width: 991px) {
+      flex-wrap: nowrap;
+    }
+    @media (max-width: 480px) {
+        flex-wrap: wrap;
+      }
+    > img {
+      flex-shrink: 0;
+      border-radius: $border-radius;
+    }
+    p {
+      margin: 0;
+      margin-left: 30px;
+      color: $thm-text-dark;
+      @media (max-width: 1199px) {
+        margin-left: 0;
+        margin-top: 30px;
+      }
+      @media (max-width: 991px) {
+        margin-left: 30px;
+        margin-top: 0;
+      }
+      @media (max-width: 480px) {
+        margin-left: 0;
+        margin-top: 30px;
+      }
+    }
+  }
+
+  &__box + &__box {
+    margin-top: 30px;
+  }
+
+  &__box {
+    background-color: #fff;
+    border-radius: $border-radius;
+    padding: 25px 30px;
+    display: flex;
+    align-items: center;
+    transition: all 500ms ease;
+
+    &-wrap {
+      margin-left: 70px;
+      @media (max-width: 1199px) {
+        margin-left: 0;
+        margin-top: 50px;
+      }
+    }
+    > span {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      background-color: $thm-base;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      flex-shrink: 0;
+      transition: all 500ms ease;
+    }
+    p {
+      margin-bottom: 0;
+      color: $thm-black;
+      font-size: 20px;
+      line-height: 26px;
+      margin-left: 30px;
+      max-width: 260px;
+      transition: all 500ms ease;
+    }
+
+    &:hover {
+      background-color: $thm-base;
+      > span {
+        background-color: #fff;
+        color: $thm-black;
+      }
+      p {
+        color: #fff;
+      }
+    }
+  }
+}
