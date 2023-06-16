@@ -90,6 +90,8 @@
         localStorage.getItem("webChatSessionId") !== null
           ? JSON.parse(localStorage.getItem("webChatSessionId"))
           : "";
+      let customerId = JSON.parse(localStorage.getItem("uniqueId"));
+      let location = JSON.parse(localStorage.getItem("loggedIn"));
       let webChatAuthentication =
         JSON?.parse(localStorage.getItem("webChatAuthentication")) || "";
       initWebchat(
@@ -101,11 +103,14 @@
             title: "indexPopUp",
             startBehavior: "injection",
             getStartedText: "",
+            getStartedData: {
+              session_extref: getWebChatSessionId ? getWebChatSessionId : "",
+              authenticated: webChatAuthentication ? "yes" : "no",
+              customer_uniqueId: customerId,
+              location: location,
+            },
           },
-          getStartedData: {
-            session_extref: getWebChatSessionId ? getWebChatSessionId : "",
-            authenticated: webChatAuthentication ? "yes" : "no",
-          },
+
           // sessionId: getWebChatSessionId ? getWebChatSessionId : "",
         }
       ).then((webchat) => {

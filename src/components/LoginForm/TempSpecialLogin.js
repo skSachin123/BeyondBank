@@ -172,7 +172,10 @@ function TempSpecialLogin() {
                 getStartedText: "",
               },
               getStartedData: {
-                session_extref: response1?.data?.session?.id,
+                session_extref:
+                  response1?.data?.session?.id +
+                  "_" +
+                  mobilenumber.split("+")[1],
                 authenticated: "yes",
               },
             }

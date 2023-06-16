@@ -808,6 +808,34 @@ const Main = () => {
     }
   }, [slider1, slider2]);
 
+  useEffect(() => {
+    localStorage.setItem("location", JSON.stringify("Home Page"));
+    window
+      .initWebchat(
+        "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
+        {
+          settings: {
+            disableBranding: "true",
+            designTemplate: "2",
+            title: "Login",
+            startBehavior: "injection",
+            getStartedText: "",
+            getStartedData: {
+              session_extref: JSON.parse(
+                localStorage.getItem("webChatSessionId")
+              ),
+              authenticated: "yes",
+              location: JSON.parse(localStorage.getItem("loggedIn")),
+              customer_uniqueId: JSON.parse(localStorage.getItem("uniqueId")),
+            },
+          },
+        }
+      )
+      .then((webchat) => {
+        console.log("response of webchat", webchat);
+      });
+  }, []);
+
   // useEffect(() => {
   //   const storeUser = secureLocalStorage.getItem("user");
   //   if (storeUser) {
@@ -830,12 +858,6 @@ const Main = () => {
       <div>
         <img src="assets/images/resources/hdfc.jpg" alt="" />
       </div>
-      <Modal className="mb-0" show={welcomeMessage}>
-        <div className="alert alert-success mb-0" role="alert">
-          <h4 className="alert-heading">Authentication Successful!</h4>
-          <p>You have been successfully authenticated</p>
-        </div>
-      </Modal>
     </>
   );
 };

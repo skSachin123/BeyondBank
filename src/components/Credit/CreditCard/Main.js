@@ -23,6 +23,34 @@ const CreditCard = () => {
       navigate("/");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    localStorage.setItem("location", JSON.stringify("Credit Card"));
+    window
+      .initWebchat(
+        "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
+        {
+          settings: {
+            disableBranding: "true",
+            designTemplate: "2",
+            startBehavior: "injection",
+            getStartedText: "",
+            getStartedData: {
+              session_extref: JSON.parse(
+                localStorage.getItem("webChatSessionId")
+              ),
+              authenticated: "yes",
+              location: "Credit Card",
+              customer_uniqueId: JSON.parse(localStorage.getItem("uniqueId")),
+            },
+          },
+        }
+      )
+      .then((webchat) => {
+        console.log("response of webchat", webchat);
+      });
+  }, []);
+
   return (
     <>
       <div className="stricky-header stricked-menu main-menu">

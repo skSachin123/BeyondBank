@@ -43,11 +43,11 @@ const routes = [
   },
   {
     path: "/credit-card-details",
-    element: <PrivateRoute component={<CreditCardDetails />} />,
+    element: <CreditCardDetails />,
   },
   {
     path: "/creditcardform",
-    element: <PrivateRoute component={<CreditCardForm />} />,
+    element: <CreditCardForm />,
   },
   {
     path: "/team",

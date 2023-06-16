@@ -18,6 +18,7 @@ const Navbar = () => {
   const path = location.pathname;
   const [menu, setmenu] = useState({});
   const navigate = useNavigate();
+  const user1 = JSON.parse(secureLocalStorage.getItem("users"));
   const user = JSON.parse(localStorage.getItem("users"));
 
   console.log(user);
@@ -70,6 +71,24 @@ const Navbar = () => {
     localStorage.removeItem("webChatSessionId");
     localStorage.removeItem("webChatAuthentication");
     secureLocalStorage.removeItem("user");
+
+    window.initWebchat(
+      "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
+      {
+        settings: {
+          disableBranding: "true",
+          designTemplate: "2",
+          startBehavior: "injection",
+          getStartedText: "",
+          getStartedData: {
+            session_extref: "",
+            authenticated: "no",
+            location: "",
+            customer_uniqueId: "",
+          },
+        },
+      }
+    );
     setIsLoggedIn(false);
     navigate("/");
   };
