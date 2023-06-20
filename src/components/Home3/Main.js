@@ -809,7 +809,7 @@ const Main = () => {
   }, [slider1, slider2]);
 
   useEffect(() => {
-    localStorage.setItem("location", JSON.stringify("Home Page"));
+    localStorage.setItem("location", JSON.stringify("Dashboard"));
     window
       .initWebchat(
         "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
@@ -825,7 +825,7 @@ const Main = () => {
                 localStorage.getItem("webChatSessionId")
               ),
               authenticated: "yes",
-              location: JSON.parse(localStorage.getItem("loggedIn")),
+              location: "Dashboard",
               customer_uniqueId: JSON.parse(localStorage.getItem("uniqueId")),
             },
           },

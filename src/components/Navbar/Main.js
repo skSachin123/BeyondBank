@@ -83,7 +83,7 @@ const Navbar = () => {
           getStartedData: {
             session_extref: "",
             authenticated: "no",
-            location: "",
+            locationpath: "landing-page",
             customer_uniqueId: "",
           },
         },
@@ -132,7 +132,15 @@ const Navbar = () => {
                   <Link to="#" className="fab fa-pinterest-p"></Link>
                   <Link to="#" className="fab fa-instagram"></Link>
                 </div>
-                {user?.firstName ? "" : <Link to="/login">Login</Link>}
+                {user?.firstName ? (
+                  location?.pathname == "/Home3" ? (
+                    <Link to="/">Home</Link>
+                  ) : (
+                    <Link to="/Home3">Dashboard</Link>
+                  )
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
                 <Link to="#">Company News</Link>
                 <Link to="#">FAQs</Link>
               </div>

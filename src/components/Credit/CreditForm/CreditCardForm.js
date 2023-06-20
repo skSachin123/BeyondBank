@@ -14,6 +14,7 @@ import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "react-bootstrap/Button";
+import { useLocation } from "react-router-dom";
 
 const CreditCardForm = () => {
   // const user = JSON.parse(secureLocalStorage.getItem("user"));
@@ -33,7 +34,8 @@ const CreditCardForm = () => {
     social: "",
     creditcardno: "",
   });
-
+  let location = useLocation();
+  console.log(location);
   const [coBrowserShow, setCoBrowserShow] = useState({ show: false, code: "" });
 
   // const notify = () => toast("Wow so easy !");
@@ -126,6 +128,7 @@ const CreditCardForm = () => {
               ),
               authenticated: "yes",
               location: " CreditCardForm",
+              cardType: location?.state?.cardType,
               customer_uniqueId: JSON.parse(localStorage.getItem("uniqueId")),
             },
           },

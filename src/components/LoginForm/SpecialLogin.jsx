@@ -15,6 +15,9 @@ import { Modal } from "react-bootstrap";
 import { TempSpecialLoginService } from "./TempSpecialLoginService";
 import { useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
+import { useLocation } from "react-router-dom";
+import { TbBell } from "react-icons/tb";
+// import confirmButton from "./../../assets/images/confirm.svg";
 
 function SpecialLogin() {
   let websocket_Service;
@@ -40,9 +43,16 @@ function SpecialLogin() {
   const [buttonEnable, setButtonEnabled] = useState(false);
   const [authenticationFailure, setAuthenticationFailure] = useState(false);
   const [arr, setArr] = useState([]);
+  const [arrForApp, setArrForApp] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modalForApp, setModalForApp] = useState(false);
   const [value, setValue] = useState({});
-  const [authenticationFacialCounter, setAuthenticationCounter] = useState(0);
+  const [iSMongoDbResponse, setIsMongoDbResponse] = useState(false);
+  const [isMongoDbResponseSuccess, setIsMongoDbResponseSuccess] =
+    useState(false);
+  // const []
+  let location = useLocation();
+  console.log(location);
 
   let navigate = useNavigate();
   let exampleSocket;
@@ -54,13 +64,16 @@ function SpecialLogin() {
     setModal(false);
     setButtonEnabled(false);
   };
+
+  const handleCloseForApp = () => {
+    setModalForApp(false);
+  };
   let uuid1 = "";
   let jwttoken = "";
   useEffect(() => {
     // signToken();
     // getMongodbResponse(externalRef);
   }, []);
-
   //select option data object
   const data = [
     {
@@ -194,6 +207,7 @@ function SpecialLogin() {
     let response = await LoginService.getLookupCustomerData(number);
     setLookUpCustomerData(response?.data);
     let deviceObj = response?.data.devices[0];
+    setIsMongoDbResponseSuccess(false);
     setDeviceObj(deviceObj);
   }
 
@@ -357,81 +371,98 @@ function SpecialLogin() {
     let pipelineKey = "6871934e-a546-4d9b-910b-2b566df42376";
     let reqPayload = createSDKPayload(pipelineKey, "push-notification");
     let jwtToken = localStorage.getItem("token");
-    console.log(jwtToken);
+    setModalForApp(true);
     setTimeout(() => {
-      LoginService.sendAuthenticationExecutionRequest(
-        reqPayload,
-        jwtToken
-      ).then((data) => {
-        setAuthenticationExecution(data.data);
-        localStorage.setItem(
-          "webChatSessionId",
-          JSON.stringify(uuid + "_" + mobilenumber.split("+")[1])
-        );
-        localStorage.setItem("webChatAuthentication", JSON.stringify(true));
-        localStorage.setItem(
-          "uniqueId",
-          JSON.stringify(mobilenumber.split("+")[1])
-        );
-        localStorage.setItem("location", JSON.stringify("loggedIn"));
-        console.log(data?.data?.session);
-        let url = `wss://app.journeyid.io/api/iframe/ws/users/${data.data.user.id}/sessions/${data?.data?.session?.id}`;
-        exampleSocket1 = new WebSocket(url);
+      LoginService.sendAuthenticationExecutionRequest(reqPayload, jwtToken)
+        .then((data) => {
+          setAuthenticationExecution(data.data);
+          localStorage.setItem(
+            "webChatSessionId",
+            JSON.stringify(uuid + "_" + mobilenumber.split("+")[1])
+          );
+          localStorage.setItem("webChatAuthentication", JSON.stringify(true));
+          localStorage.setItem(
+            "uniqueId",
+            JSON.stringify(mobilenumber.split("+")[1])
+          );
+          localStorage.setItem("location", JSON.stringify("loggedIn"));
+          console.log(data?.data?.session);
 
-        exampleSocket1.onopen = (e) => {
-          exampleSocket1.send(`CONNECT ${jwtToken}`);
-        };
-        exampleSocket1.onmessage = (e) => {
-          console.log("onmessage facial", e.data);
-          let SocketEvent = JSON.parse(e.data);
+          function connectToSocketThroughApp() {
+            let url = `wss://app.journeyid.io/api/iframe/ws/users/${data.data.user.id}/sessions/${data?.data?.session?.id}`;
+            exampleSocket1 = new WebSocket(url);
+            let temparr = [];
 
-          if (SocketEvent?.event === "session-authenticated") {
-            window
-              .initWebchat(
-                "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
-                {
-                  settings: {
-                    disableBranding: "true",
-                    designTemplate: "2",
-                    title: "Login",
-                    startBehavior: "injection",
-                    getStartedText: "",
-                    getStartedData: {
-                      session_extref:
-                        data?.data?.session?.id +
-                        "_" +
-                        mobilenumber.split("+")[1],
-                      authenticated: "yes",
-                      customer_uniqueId: mobilenumber.split("+")[1],
-                      location: "loggedIn",
-                    },
-                  },
+            exampleSocket1.onopen = (e) => {
+              if (location?.pathname == "/login") {
+                exampleSocket1.send(`CONNECT ${jwtToken}`);
+              }
+            };
+            exampleSocket1.onmessage = (e) => {
+              console.log("onmessage facial", e.data);
+              let SocketEvent = JSON.parse(e.data);
+              temparr.push(SocketEvent);
+
+              setArrForApp(temparr.slice(-1));
+              if (SocketEvent?.event === "session-authenticated") {
+                window
+                  .initWebchat(
+                    "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
+                    {
+                      settings: {
+                        disableBranding: "true",
+                        designTemplate: "2",
+                        title: "Login",
+                        startBehavior: "injection",
+                        getStartedText: "",
+                        getStartedData: {
+                          session_extref:
+                            data?.data?.session?.id +
+                            "_" +
+                            mobilenumber.split("+")[1],
+                          authenticated: "yes",
+                          customer_uniqueId: mobilenumber.split("+")[1],
+                          location: "loggedIn",
+                        },
+                      },
+                    }
+                  )
+                  .then((webchat) => {
+                    console.log("response of webchat", webchat);
+                  });
+                secureLocalStorage.setItem(
+                  "user",
+                  JSON.stringify(bootstrapSession?.user)
+                );
+                localStorage.setItem(
+                  "users",
+                  JSON.stringify(bootstrapSession?.user)
+                );
+                setTimeout(() => navigate("/Home3"), 3000);
+              }
+              setSocketData(SocketEvent);
+              message.next(SocketEvent);
+            };
+            exampleSocket.onclose = (e) => {
+              if (location?.pathname == "/login") {
+                if (temparr.slice(-1)[0].event !== "session-authenticated") {
+                  setTimeout(connectToSocketThroughApp, 2000);
                 }
-              )
-              .then((webchat) => {
-                console.log("response of webchat", webchat);
-              });
-            secureLocalStorage.setItem(
-              "user",
-              JSON.stringify(bootstrapSession?.user)
-            );
-            localStorage.setItem(
-              "users",
-              JSON.stringify(bootstrapSession?.user)
-            );
-            navigate("/Home3");
+              }
+            };
+            exampleSocket1.onerror = (e) => {
+              console.log(e);
+            };
           }
-          setSocketData(SocketEvent);
-          message.next(SocketEvent);
-        };
-
-        exampleSocket1.onerror = (e) => {
-          console.log(e);
-        };
-      });
+          connectToSocketThroughApp();
+        })
+        .catch((err) => {
+          console.log("hi");
+          setButtonEnabled(false);
+        });
     }, 3000);
   }
-
+  console.log(arrForApp);
   async function sendFacialAuthRequest() {
     let requestNotificationName = "Face authentication Request";
 
@@ -446,98 +477,97 @@ function SpecialLogin() {
 
     try {
       setTimeout(() => {
-        LoginService.sendAuthenticationExecutionRequest(
-          reqPayload,
-          jwtToken
-        ).then((data) => {
-          setAuthenticationExecution(data.data);
-          setModal(true);
-          setQrCode(data?.data?.url);
-          localStorage.setItem(
-            "webChatSessionId",
-            JSON.stringify(uuid + "_" + mobilenumber.split("+")[1])
-          );
-          localStorage.setItem("webChatAuthentication", JSON.stringify(true));
-          localStorage.setItem("welcomeMessage", JSON.stringify(true));
-          localStorage.setItem(
-            "uniqueId",
-            JSON.stringify(mobilenumber.split("+")[1])
-          );
-          localStorage.setItem("location", JSON.stringify("loggedIn"));
-          let url = `wss://app.journeyid.io/api/iframe/ws/users/${data.data.user.id}/sessions/${data?.data?.session?.id}`;
-          exampleSocket = new WebSocket(url);
-          exampleSocket.timeoutInterval = 30000;
-          console.log("hello socket", exampleSocket.timeoutInterval);
-          let temparr = [];
-          exampleSocket.onopen = (e) => {
-            exampleSocket.send(`CONNECT ${jwtToken}`);
-            console.log("open", e);
-            setTimeout(() => {
-              exampleSocket.close();
-              console.log("hi");
-            }, 120000);
-          };
+        LoginService.sendAuthenticationExecutionRequest(reqPayload, jwtToken)
+          .then((data) => {
+            setAuthenticationExecution(data.data);
+            setModal(true);
+            setQrCode(data?.data?.url);
+            localStorage.setItem(
+              "webChatSessionId",
+              JSON.stringify(uuid + "_" + mobilenumber.split("+")[1])
+            );
+            localStorage.setItem("webChatAuthentication", JSON.stringify(true));
+            localStorage.setItem("welcomeMessage", JSON.stringify(true));
+            localStorage.setItem(
+              "uniqueId",
+              JSON.stringify(mobilenumber.split("+")[1])
+            );
+            localStorage.setItem("location", JSON.stringify("loggedIn"));
 
-          exampleSocket.onmessage = (e) => {
-            console.log("onmessage");
-            let SocketEvent = JSON.parse(e.data);
-            temparr.push(SocketEvent);
+            function connectToSocket() {
+              let url = `wss://app.journeyid.io/api/iframe/ws/users/${data.data.user.id}/sessions/${data?.data?.session?.id}`;
+              console.log("hiiiiii socket inside function");
+              exampleSocket = new WebSocket(url);
+              let temparr = [];
 
-            setArr(temparr.slice(-1));
-            if (temparr.slice(-1)[0].event === "session-authenticated") {
-              window
-                .initWebchat(
-                  "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
-                  {
-                    settings: {
-                      disableBranding: "true",
-                      designTemplate: "2",
-                      title: "Login",
-                      startBehavior: "injection",
-                      getStartedText: "",
-                      getStartedData: {
-                        session_extref:
-                          data?.data?.session?.id +
-                          "_" +
-                          mobilenumber.split("+")[1],
-                        authenticated: "yes",
-                        customer_uniqueId: mobilenumber.split("+")[1],
-                        location: "loggedIn",
-                      },
-                    },
+              exampleSocket.onopen = (e) => {
+                // if (location?.pathname == "/login") {
+                exampleSocket.send(`CONNECT ${jwtToken}`);
+                // }
+              };
+
+              exampleSocket.onmessage = (e) => {
+                let SocketEvent = JSON.parse(e.data);
+                temparr.push(SocketEvent);
+
+                setArr(temparr.slice(-1));
+                if (temparr.slice(-1)[0].event === "session-authenticated") {
+                  window
+                    .initWebchat(
+                      "https://endpoint-trial.cognigy.ai/2a7dbd4efa25354aa8b6abb0b637629ee8fcd3aab960523599c5da1e0204f5a5",
+                      {
+                        settings: {
+                          disableBranding: "true",
+                          designTemplate: "2",
+                          title: "Login",
+                          startBehavior: "injection",
+                          getStartedText: "",
+                          getStartedData: {
+                            session_extref:
+                              data?.data?.session?.id +
+                              "_" +
+                              mobilenumber.split("+")[1],
+                            authenticated: "yes",
+                            customer_uniqueId: mobilenumber.split("+")[1],
+                            location: "loggedIn",
+                          },
+                        },
+                      }
+                    )
+                    .then((webchat) => {
+                      console.log("response of webchat", webchat);
+                    });
+                  secureLocalStorage.setItem(
+                    "user",
+                    JSON.stringify(bootstrapSession?.user)
+                  );
+                  localStorage.setItem(
+                    "users",
+                    JSON.stringify(bootstrapSession?.user)
+                  );
+                  setTimeout(() => {
+                    navigate("/Home3");
+                  }, 5000);
+                }
+
+                // message.next(SocketEvent);
+              };
+              exampleSocket.onclose = (e) => {
+                console.log(temparr);
+                if (location?.pathname == "/login") {
+                  if (temparr.slice(-1)[0].event !== "session-authenticated") {
+                    setTimeout(connectToSocket, 2000);
+                  } else {
+                    exampleSocket.close();
                   }
-                )
-                .then((webchat) => {
-                  console.log("response of webchat", webchat);
-                });
-              secureLocalStorage.setItem(
-                "user",
-                JSON.stringify(bootstrapSession?.user)
-              );
-              localStorage.setItem(
-                "users",
-                JSON.stringify(bootstrapSession?.user)
-              );
-              setTimeout(() => {
-                navigate("/Home3");
-              }, 5000);
+                }
+              };
             }
-
-            // message.next(SocketEvent);
-          };
-          if (exampleSocket.timeoutInterval === 30000) {
-            exampleSocket.onclose = (e) => {
-              console.log(
-                `Socket is closed. Reconnect will be attempted in ${Math.min(
-                  10000 / 1000
-                )} second.`,
-                e.reason
-              );
-
-              //call check function after timeout
-            };
-          }
-        });
+            connectToSocket();
+          })
+          .catch((err) => {
+            setButtonEnabled(false);
+          });
       }, 6000);
     } finally {
       if (exampleSocket && exampleSocket.readyState === WebSocket.OPEN) {
@@ -554,6 +584,7 @@ function SpecialLogin() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log("hi");
     setButtonEnabled(true);
     if (value === "App") {
       // sdkAuthentication();
@@ -564,40 +595,40 @@ function SpecialLogin() {
       sdkAuthentication();
     } else {
       // sendFacialAuthRequest();
-      setTimeout(() => {
-        sendFacialAuthRequest();
-      }, 3000);
+      sendFacialAuthRequest();
     }
   }
   const handleClickOutside = (event) => {
     event.preventDefault();
     signToken();
     getMongodbResponse(mobilenumber);
+    setIsMongoDbResponseSuccess(true);
   };
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="exampleFormControlInput1" className="form-label">
-            Identifier
-          </label>
-          <input
-            type="text"
-            className="form-control shadow-none"
-            id="mobilenumber"
-            placeholder="Identifier"
-            value={mobilenumber}
-            onBlur={handleClickOutside}
-            onChange={(e) => setMobileNumber(e.target.value)}
-          />
-        </div>
-        <div>
-          <div className="form-group">
+        <fieldset disabled={isMongoDbResponseSuccess}>
+          <div className="mb-4">
             <label htmlFor="exampleFormControlInput1" className="form-label">
-              Send Request
+              Identifier
             </label>
+            <input
+              type="text"
+              className="form-control shadow-none"
+              id="mobilenumber"
+              placeholder="Identifier"
+              value={mobilenumber}
+              onBlur={handleClickOutside}
+              onChange={(e) => setMobileNumber(e.target.value)}
+            />
+          </div>
+          <div>
+            <div className="form-group">
+              <label htmlFor="exampleFormControlInput1" className="form-label">
+                Send Request
+              </label>
 
-            {/* <Select
+              {/* <Select
               placeholder=" "
               // value={selectedOption}
               options={data}
@@ -610,54 +641,64 @@ function SpecialLogin() {
               )}
             /> */}
 
-            <div>
-              <label className="layersMenu">
-                <input
-                  type="radio"
-                  name="Facial"
-                  value="Facial"
-                  onChange={(e) => handleChange(e)}
-                  checked={authenticationChoice === "Facial"}
-                />
-                <img
-                  src={FaceRecognition}
-                  className="pl-1"
-                  height="28px"
-                  alt=""
-                />{" "}
-                Facial
-              </label>
+              <div>
+                <label className="layersMenu">
+                  <input
+                    type="radio"
+                    name="request"
+                    value="Facial"
+                    onChange={(e) => handleChange(e)}
+                    checked={authenticationChoice === "Facial"}
+                    required
+                  />
+                  <img
+                    src={FaceRecognition}
+                    className="pl-1"
+                    height="28px"
+                    alt=""
+                  />{" "}
+                  Facial
+                </label>
 
-              <label className="layersMenu ml-5">
-                <input
-                  type="radio"
-                  name="App"
-                  value="App"
-                  onChange={handleChange}
-                  checked={authenticationChoice === "App"}
-                />
-                <img
-                  src={`https://lab.bravishma.com:6500/assets/images/mobile-app.png`}
-                  className="pl-1"
-                  height="28px"
-                  alt=""
-                />{" "}
-                App
-              </label>
+                <label className="layersMenu ml-5">
+                  <input
+                    type="radio"
+                    name="request"
+                    value="App"
+                    onChange={handleChange}
+                    checked={authenticationChoice === "App"}
+                    required
+                  />
+                  <img
+                    src={`https://lab.bravishma.com:6500/assets/images/mobile-app.png`}
+                    className="pl-1"
+                    height="28px"
+                    alt=""
+                  />{" "}
+                  App
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="mt-4">
-          <button type="submit" className="btn-blue btn-block">
+          <div className="mt-4">
+            {/* <button type="submit" className="btn-blue btn-block" disabled>
             Submit
-          </button>
-        </div>
-        {/* <img
+          </button> */}
+            <button
+              type="submit"
+              className="btn btn-lg  btn-block btn-primary"
+              disabled={buttonEnable}
+            >
+              Submit
+            </button>
+          </div>
+          {/* <img
           src={`https://e7.pngegg.com/pngimages/878/377/png-clipart-check-mark-computer-icons-others-miscellaneous-angle.png`}
           alt=""
           height="200px"
           width="200px"
         /> */}
+        </fieldset>
       </form>
 
       {modal && qrcode ? (
@@ -666,7 +707,7 @@ function SpecialLogin() {
             {/* <Modal.Header> */}
             <Modal.Title>
               <div className="d-flex justify-content-between px-3 pt-4 pb-1">
-                <div>QR Code</div>
+                <div>Face Authentication</div>
                 <div
                   onClick={handleClose}
                   style={{ cursor: "pointer", float: "right" }}
@@ -700,10 +741,10 @@ function SpecialLogin() {
               <div className="text-center">
                 {arr[0]?.event === "session-authenticated" ? (
                   <img
-                    src={`https://e7.pngegg.com/pngimages/878/377/png-clipart-check-mark-computer-icons-others-miscellaneous-angle.png`}
-                    alt=""
+                    src={`assets/images/confirm.svg`}
                     height="200px"
                     width="200px"
+                    alt="error"
                   />
                 ) : (
                   <img
@@ -715,13 +756,85 @@ function SpecialLogin() {
                 <h6>
                   {/* Waiting for you to complete the process on your Mobile... */}{" "}
                   {arr[0]?.event === "execution-created"
-                    ? "Please check the notification link on you mobile app to complete the authentication"
+                    ? "Waiting for you to start the process on your mobile"
                     : arr[0]?.event === "execution-started"
-                    ? "Getting Ready for Face Authentication"
+                    ? "Started with Face Authentication"
                     : arr[0]?.event === "execution-progress"
                     ? "Face Authentication is in progress,Please wait... "
                     : arr[0]?.event === "session-authenticated"
                     ? "You are successfully authenticated,Thank-You"
+                    : ""}
+                </h6>
+              </div>
+            </Modal.Body>
+          </Modal>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {modalForApp ? (
+        <div>
+          <Modal show={modalForApp} style={{ marginTop: "150px" }}>
+            {/* <Modal.Header> */}
+            <Modal.Title>
+              <div className="d-flex justify-content-between px-3 pt-4 pb-1">
+                <div>App Notification</div>
+                <div
+                  onClick={handleCloseForApp}
+                  style={{ cursor: "pointer", float: "right" }}
+                >
+                  <AiOutlineClose />
+                </div>
+              </div>
+              <hr />
+            </Modal.Title>
+            {/* </Modal.Header> */}
+            <Modal.Body>
+              <div>
+                {arr[0]?.event === "session-authenticated" ? (
+                  <>
+                    <h5 className="text-center">Authentication Successful!</h5>
+                    <h6 className="text-center">
+                      You have been successfully authenticated
+                    </h6>
+                  </>
+                ) : (
+                  <>
+                    <h6 className="text-center">
+                      Please check the notification on you mobile app and
+                      complete the authentication process
+                    </h6>
+                    {/* <h6 className="text-center">
+                      Please don't reload the page
+                    </h6> */}
+                  </>
+                )}
+              </div>
+              <div className="text-center">
+                {arr[0]?.event === "session-authenticated" ? (
+                  <img
+                    src={`assets/images/confirm.svg`}
+                    height="200px"
+                    width="200px"
+                    alt="error"
+                  />
+                ) : (
+                  <TbBell size={200} color={"#0c2139"} />
+                )}
+                <h6 className="text-center text-muted">
+                  Please don't reload the page
+                </h6>
+                <h6>
+                  {/* Waiting for you to complete the process on your Mobile... */}{" "}
+                  {arrForApp[0]?.event === "execution-created"
+                    ? "Please click the link received on your mobile to proceed"
+                    : arrForApp[0]?.event === "execution-started"
+                    ? "Started with App Authentication"
+                    : arrForApp[0]?.event === "execution-progress"
+                    ? "App Authentication is in progress,Please wait... "
+                    : arrForApp[0]?.event === "session-authenticated"
+                    ? "You are successfully authenticated, Thank-You"
                     : ""}
                 </h6>
               </div>

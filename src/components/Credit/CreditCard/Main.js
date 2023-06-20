@@ -11,8 +11,12 @@ const CreditCard = () => {
   const navigate = useNavigate();
   // const history = useHistory();
 
-  const hanldeForm = () => {
-    navigate("/creditcardform");
+  const handleForm = (value) => {
+    navigate("/creditcardform", {
+      state: {
+        cardType: value,
+      },
+    });
   };
 
   //for the authenctication it will check the token and see if user is login if it is then it will show creditcardpage
@@ -41,6 +45,7 @@ const CreditCard = () => {
               ),
               authenticated: "yes",
               location: "Credit Card",
+              cardType: "",
               customer_uniqueId: JSON.parse(localStorage.getItem("uniqueId")),
             },
           },
@@ -50,6 +55,45 @@ const CreditCard = () => {
         console.log("response of webchat", webchat);
       });
   }, []);
+
+  const creditCardData = [
+    {
+      image: "assets/images/credit-card/credit-card-1-1.png",
+      title: "Visa Platinum Card",
+      description:
+        " A Visa Platinum Card is a premium credit card that offers exclusive benefits and perks to its cardholders. These cards typically have higher credit limits",
+    },
+    {
+      image: "assets/images/credit-card/credit-card-1-2.png",
+      title: "Visa Gold Card",
+      description:
+        "A Visa Gold Card is a premium credit card that offers exclusive benefits and rewards to its cardholders. Similar to the Visa Platinum Card ",
+    },
+    {
+      image: "assets/images/credit-card/credit-card-1-3.png",
+      title: "Visa classNameic Card",
+      description:
+        " A Visa Classic Card is a basic credit card that is widely accepted worldwide.offers a lower credit limit and fewer rewards compared to premium credit cards",
+    },
+    {
+      image: "assets/images/credit-card/credit-card-1-4.png",
+      title: "Titanium Mastercard",
+      description:
+        " A Titanium Mastercard is a premium credit card that offers exclusive benefits and rewards to its cardholders.",
+    },
+    {
+      image: "assets/images/credit-card/credit-card-1-5.png",
+      title: "Titanium Mastercard",
+      description:
+        "A Titanium Mastercard is a type of credit card that offers premium benefits and exclusive rewards to its users.",
+    },
+    {
+      image: "assets/images/credit-card/credit-card-1-6.png",
+      title: "Express Card",
+      description:
+        " The Express Card is a credit card issued by American Express that offers a range of benefits and rewards to cardholders.",
+    },
+  ];
 
   return (
     <>
@@ -88,148 +132,33 @@ const CreditCard = () => {
       <section className="credit-card">
         <div className="container">
           <div className="row">
-            <div className="col-lg-4 col-md-6">
-              <div className="credit-card__box">
-                <div className="credit-card__box-image">
-                  <img
-                    src="assets/images/credit-card/credit-card-1-1.png"
-                    onClick={hanldeForm}
-                    style={{ cursor: "pointer" }}
-                  />
+            {creditCardData?.map((creditcard, i) => (
+              <>
+                <div className="col-lg-4 col-md-6">
+                  <div className="credit-card__box">
+                    <div className="credit-card__box-image">
+                      <img
+                        src={creditcard?.image}
+                        onClick={() => handleForm(creditcard?.title)}
+                        style={{ cursor: "pointer" }}
+                        alt=""
+                      />
+                    </div>
+                    <div className="credit-card__content">
+                      <h3>
+                        <Link to="/credit-card-details">
+                          {creditcard?.title}
+                        </Link>
+                      </h3>
+                      <p>{creditcard?.description}</p>
+                      <Link to="/creditcardform" className="credit-card__link">
+                        <i className="pylon-icon-right-arrow"></i>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <div className="credit-card__content">
-                  {/* <h3><Link to="/credit-card-details">Visa Platinum Card</Link></h3> */}
-                  <h3>
-                    <Link to="/credit-card-details">Visa Platinum Card</Link>
-                  </h3>
-                  <p>
-                    A Visa Platinum Card is a premium credit card that offers
-                    exclusive benefits and perks to its cardholders. These cards
-                    typically have higher credit limits
-                  </p>
-                  <Link to="/creditcardform" className="credit-card__link">
-                    <i className="pylon-icon-right-arrow"></i>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="credit-card__box">
-                <div className="credit-card__box-image">
-                  <img
-                    src="assets/images/credit-card/credit-card-1-2.png"
-                    onClick={hanldeForm}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-                <div className="credit-card__content">
-                  <h3>
-                    <Link to="/credit-card-details">Visa Gold Card</Link>
-                  </h3>
-                  <p>
-                    A Visa Gold Card is a premium credit card that offers
-                    exclusive benefits and rewards to its cardholders. Similar
-                    to the Visa Platinum Card
-                  </p>
-                  <Link to="/creditcardform" className="credit-card__link">
-                    <i className="pylon-icon-right-arrow"></i>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="credit-card__box">
-                <div className="credit-card__box-image">
-                  <img
-                    src="assets/images/credit-card/credit-card-1-3.png"
-                    onClick={hanldeForm}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-                <div className="credit-card__content">
-                  <h3>
-                    <Link to="/credit-card-details">Visa classNameic Card</Link>
-                  </h3>
-                  <p>
-                    A Visa Classic Card is a basic credit card that is widely
-                    accepted worldwide.offers a lower credit limit and fewer
-                    rewards compared to premium credit cards
-                  </p>
-                  <Link to="/creditcardform" className="credit-card__link">
-                    <i className="pylon-icon-right-arrow"></i>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="credit-card__box">
-                <div className="credit-card__box-image">
-                  <img
-                    src="assets/images/credit-card/credit-card-1-4.png"
-                    onClick={hanldeForm}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-                <div className="credit-card__content">
-                  <h3>
-                    <Link to="/credit-card-details">Titanium Mastercard</Link>
-                  </h3>
-                  <p>
-                    A Titanium Mastercard is a premium credit card that offers
-                    exclusive benefits and rewards to its cardholders.
-                  </p>
-                  <Link to="/creditcardform" className="credit-card__link">
-                    <i className="pylon-icon-right-arrow"></i>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="credit-card__box">
-                <div className="credit-card__box-image">
-                  <img
-                    src="assets/images/credit-card/credit-card-1-5.png"
-                    onClick={hanldeForm}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-                <div className="credit-card__content">
-                  <h3>
-                    <Link to="/credit-card-details">Titanium Mastercard</Link>
-                  </h3>
-                  <p>
-                    A Titanium Mastercard is a type of credit card that offers
-                    premium benefits and exclusive rewards to its users.
-                  </p>
-                  <Link to="/creditcardform" className="credit-card__link">
-                    <i className="pylon-icon-right-arrow"></i>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="credit-card__box">
-                <div className="credit-card__box-image">
-                  <img
-                    src="assets/images/credit-card/credit-card-1-6.png"
-                    onClick={hanldeForm}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-                <div className="credit-card__content">
-                  <h3>
-                    <Link to="/credit-card-details">Express Card</Link>
-                  </h3>
-                  <p>
-                    The Express Card is a credit card issued by American Express
-                    that offers a range of benefits and rewards to cardholders.
-                  </p>
-                  <Link to="/creditcardform" className="credit-card__link">
-                    <i className="pylon-icon-right-arrow"></i>
-                  </Link>
-                </div>
-              </div>
-            </div>
+              </>
+            ))}
           </div>
         </div>
       </section>
